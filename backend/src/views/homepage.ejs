@@ -1,15 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-</head>
-<body>
-    <p>hello I'm Son</p>
-    <p>
-        <%= data %>
-    </p>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home Page</title>
+    </head>
+
+    <style>
+        .btn {
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            height: 30px;
+            width: 90px;
+            background: orangered;
+        }
+
+        .btn > a {
+            text-decoration: none;
+            color: black;
+            padding: 4px;
+        }
+    </style>
+
+    <body>
+        <p>
+            hello I'm Son:
+            <button class="btn" type="button">
+                <a href="/get-crud">Table users</a>
+            </button>
+        </p>
+        <p><%= data %></p>
+    </body>
 </html>
