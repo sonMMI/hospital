@@ -1,5 +1,6 @@
 import express from 'express';
 import homeController from '../controllers/homeController';
+import userController from '../controllers/userController';
 
 let router = express.Router();
 
@@ -20,6 +21,9 @@ let initWebRoutes = (app) => {
 
     // delete user
     router.get('/delete-crud', homeController.deleteCRUD);
+
+    // API users
+    router.post('/api/login', userController.handleLogin);
 
     return app.use('/', router);
 };
