@@ -11,7 +11,7 @@ const handleLogin = async (req, res) => {
         });
     }
 
-    let userData = await servicesUsers.handleUserLogin(email, password);
+    const userData = await servicesUsers.handleUserLogin(email, password);
 
     return res.status(200).json({
         errCode: userData.errCode,
@@ -20,6 +20,28 @@ const handleLogin = async (req, res) => {
     });
 };
 
+const handleRegister = async (req, res) => {
+    const data = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (!email || !password) {
+        return res.status(500).json({
+            errCode: 1,
+            message: 'Missing inputs email or password!',
+        });
+    }
+
+    const createUser = await servicesUsers.handleUserRegister(data);
+
+    return res.status(200).json({
+        errCode: createUser.errCode,
+        message: createUser.errMessage,
+        user: createUser?.user || {},
+    });
+};
+
 module.exports = {
     handleLogin,
+    handleRegister,
 };

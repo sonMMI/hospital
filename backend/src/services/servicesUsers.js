@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import db from '../models/index';
 
+const salt = bcrypt.genSaltSync(10);
+
 const handleUserLogin = (email, password) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -43,6 +45,61 @@ const handleUserLogin = (email, password) => {
     });
 };
 
+const handleUserRegister = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const userData = {};
+            const isExist = await checkUserEmail(data.email);
+
+            //user not already exists
+            if (!isExist) {
+                const hashPasswordFromBcrypt = await hashUserPassword(
+                    data.password
+                );
+                await db.User.create({
+                    email: data.email,
+                    password: hashPasswordFromBcrypt,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    address: data.address,
+                    phoneNumber: data.phoneNumber,
+                    gender: data.gender === '1' ? 'true' : 'false',
+                    roleId: data.roleId || 3,
+                });
+
+                const newUser = await db.User.findOne({
+                    where: { email: data.email },
+                    attributes: ['email', 'roleId', 'password'],
+                    raw: true,
+                });
+                userData.errCode = 0;
+                userData.errMessage = 'Create user success';
+
+                delete newUser.password;
+                userData.user = newUser;
+            } else {
+                //return error
+                userData.errCode = 1;
+                userData.errMessage = `Your's Email is existing. Please try other email!`;
+            }
+            resolve(userData);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+const hashUserPassword = (password) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            var hashPassword = await bcrypt.hashSync(password, salt);
+            resolve(hashPassword);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 const checkUserEmail = (userEmail) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -60,4 +117,5 @@ const checkUserEmail = (userEmail) => {
 
 module.exports = {
     handleUserLogin,
+    handleUserRegister,
 };
