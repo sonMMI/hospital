@@ -1,11 +1,9 @@
+import { push } from "connected-react-router";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { push } from "connected-react-router";
+import { userService } from "../../services";
 import * as actions from "../../store/actions";
 import "./Login.scss";
-import { FormattedMessage } from "react-intl";
-import { Alert } from "reactstrap";
-import { userService } from "../../services";
 
 class Login extends Component {
   constructor(props) {
@@ -125,6 +123,10 @@ class Login extends Component {
                 <i className="fab fa-twitter twitter"></i>
                 <i className="fab fa-google-plus google"></i>
               </div>
+            </div>
+
+            <div className="col-12 text-center mt-3">
+              <a href="/register">Don't have an account. Register here!</a>
             </div>
           </div>
         </div>

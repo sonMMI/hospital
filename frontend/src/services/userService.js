@@ -7,6 +7,12 @@ const userService = {
       password: userPassword,
     });
   },
+
+  handleRegister(data) {
+    return axios.post("/api/register", {
+      data: data,
+    });
+  },
 };
 
 export default userService;
