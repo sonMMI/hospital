@@ -21,9 +21,9 @@ const handleLogin = async (req, res) => {
 };
 
 const handleRegister = async (req, res) => {
-    const data = req.body;
-    const email = req.body.email;
-    const password = req.body.password;
+    const data = req.body.data;
+    const email = data.email;
+    const password = data.password;
 
     if (!email || !password) {
         return res.status(500).json({
